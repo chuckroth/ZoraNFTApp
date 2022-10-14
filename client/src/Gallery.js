@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useState, setState} from "react";
 import axios from 'axios'
 
 export default class Gallery extends Component{
@@ -37,9 +37,43 @@ export default class Gallery extends Component{
     render(){
         return(
             <div>
-                <h1>Literally the font</h1>
+                <Worm />
                 <div>{this.state.ImageUrl}</div>
             </div>
         )
     }
+}
+
+function Worm (){
+    const [ name, getNFT ] = useState("")
+    let postName = (e) =>{
+        let output
+        async function getInfo(e) {
+        e.preventDefault()
+        try {
+            const resp = await axios.post("/hey_honey", {
+                name
+            })
+
+            console.log(resp.data)
+            output = resp.data
+            return output
+        } catch (error) {
+            console.error(error)
+        }
+        }
+        getInfo(e).then(output =>{console.log("output it outside of function scope", output)
+        this.setState({ name : output})
+        })
+        
+    }
+    return (
+        <div className="App">
+            <form onSubmit={postName}>
+                <input type="text" value={name} onChange={(e) => getNFT(e.target.value)} />
+                <button type="submit">Get Collection's Gallery</button>
+                <p>{name}</p>
+            </form>
+        </div>
+    )
 }
