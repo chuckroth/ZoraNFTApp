@@ -7,19 +7,19 @@ function Form (){
         async function postName(e) {
             e.preventDefault()
             try {
-                await axios.post("/hey_honey", {
+                const resp = await axios.post("/hey_honey", {
                     name
                 })
+                console.log(resp.data)
             } catch (error) {
                 console.error(error)
             }
         }
-    
         return (
             <div className="App">
                 <form onSubmit={postName}>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    <button type="submit">Send Name</button>
+                    <button type="submit">Get Collection's Gallery</button>
                 </form>
             </div>
         )

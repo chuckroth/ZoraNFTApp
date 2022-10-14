@@ -93,7 +93,7 @@ app.use('/hey_honey', async (req, res, next) => {
         return output
     }
     console.log(JSON.stringify(allUrls()))
-    res.end("i am sending this")
+    res.end(JSON.stringify(allUrls()))
 
 })
 
