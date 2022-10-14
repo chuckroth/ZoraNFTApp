@@ -4,6 +4,7 @@ import express from "express"
 const port = 5150
 const app = express()
 const zdk = new ZDK("https://api.zora.co/graphql");
+app.use(express.json())
 
 /*using built-function fetchTokens 
 which uses graphql and collectionaddresses to query a collectionAddresses token info
@@ -54,7 +55,21 @@ app.get('/', (req, res)=>{
 /**
  * hitting this directly from express is just a spewed out JSON string of the info we will pass into react
  */
-app.use('/api/nft', (req, res)=>{
+app.use('/api/nft', (req, res, next)=>{
     res.end(JSON.stringify(loopLinks()))
 })
+app.post('/hey_honey', async (req, res) => {
+    let { name } = req.body
+    let resArray = Object.values(name)
+    let targetString = ""
+    let x
+    for(x = 0; x< resArray.length; x++){
+        targetString = targetString + resArray[x]
+    }
+    let broken = await fetchTokens(zdk, targetString)
+    let submittedForm = JSON.stringify(broken, null, 3)
+    console.log(submittedForm)
+    console.log({ name })
+})
+
 app.listen(port, console.log(`server is listening on port ${port}`))
