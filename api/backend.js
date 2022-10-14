@@ -69,6 +69,7 @@ app.use('/hey_honey', async (req, res, next) => {
     let broken = await fetchTokens(zdk, targetString)
     let submittedForm = JSON.stringify(broken, null, 3)
     //console.log(submittedForm)
+    console.log(resArray)
     console.log({ name })
     const allTokens = JSON.parse(submittedForm).tokens.nodes
     let theTokens = () =>{
@@ -92,7 +93,7 @@ app.use('/hey_honey', async (req, res, next) => {
         return output
     }
     console.log(JSON.stringify(allUrls()))
-    res.send(JSON.stringify(allUrls()))
+    res.end("i am sending this")
 
 })
 
