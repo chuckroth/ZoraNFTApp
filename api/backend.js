@@ -58,7 +58,7 @@ app.get('/', (req, res)=>{
 app.use('/api/nft', (req, res, next)=>{
     res.end(JSON.stringify(loopLinks()))
 })
-app.post('/hey_honey', async (req, res) => {
+app.use('/hey_honey', async (req, res, next) => {
     let { name } = req.body
     let resArray = Object.values(name)
     let targetString = ""
@@ -68,8 +68,32 @@ app.post('/hey_honey', async (req, res) => {
     }
     let broken = await fetchTokens(zdk, targetString)
     let submittedForm = JSON.stringify(broken, null, 3)
-    console.log(submittedForm)
+    //console.log(submittedForm)
     console.log({ name })
+    const allTokens = JSON.parse(submittedForm).tokens.nodes
+    let theTokens = () =>{
+        let theCollection = Object.keys(allTokens).length
+        return theCollection
+    }
+
+    function tokenInf(num, url){
+        this.num = num
+        this.url = url
+    }
+
+    let y;
+    let allUrls = () =>
+    {
+    let output =[]
+        for(y =0;y<theTokens(); y++) {
+        let newToken = new tokenInfo(y, JSON.stringify(allTokens[y].token.image.mediaEncoding.thumbnail))
+        output.push(newToken)
+        }
+        return output
+    }
+    console.log(JSON.stringify(allUrls()))
+    res.send(JSON.stringify(allUrls()))
+
 })
 
 app.listen(port, console.log(`server is listening on port ${port}`))
