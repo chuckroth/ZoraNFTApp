@@ -9,16 +9,17 @@ export default function Form() {
       <div className="App">
         <form onSubmit={async (e)=>{
             e.preventDefault()
-            const resp = await postName(name)
-            let x
             let imageArray = []
-         
-          
+            const resp = await postName(name)
+            if (resp === "Internal Server Error"){
+                imageArray = "Internal Server Error"
+            } else {
+            let x
             for(x=0; x<resp.length; x++){
                 const oldImageUrl = resp[x]
-                const newImageUrl = (oldImageUrl.slice(3,-3))
-                imageArray.push(<img src={newImageUrl} alt="Internal Server Error" loading="lazy"/>)
+                imageArray.push(<img src={oldImageUrl} alt="Internal Server Error" loading="lazy"/>)
                 
+            }
             }
             setPics(imageArray)
         }}>
@@ -43,12 +44,14 @@ async function postName (e) {
           
             for(x=0; x<resp.data.length; x++){
                 let anImageSrc = JSON.stringify(resp.data[x].url)
-                imageArray.push(anImageSrc)
+                let newImageSrc = anImageSrc.slice(3, -3)
+                imageArray.push(newImageSrc)
                 
             }
         console.log("this is image array "+imageArray)
         return imageArray
       } catch (error) {
         console.error(error);
+        return "Internal Server Error"
       }
 }
