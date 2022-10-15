@@ -43,9 +43,12 @@ async function postName (e) {
         let imageArray = []
           
             for(x=0; x<resp.data.length; x++){
+                if (!resp.data[x].url){
+                    continue
+                } else{
                 let anImageSrc = JSON.stringify(resp.data[x].url)
                 let newImageSrc = anImageSrc.slice(3, -3)
-                imageArray.push(newImageSrc)
+                imageArray.push(newImageSrc)}
                 
             }
         console.log("this is image array "+imageArray)
