@@ -37,7 +37,7 @@ export default function Form() {
 
 async function postName (e) {
       try {
-        const resp = await axios.post("/hey_honey",{ e })
+        const resp = await axios.post('/api/nft',{ e })
         console.log(resp.data)
         let x
         let imageArray = []

@@ -55,10 +55,11 @@ app.get('/', (req, res)=>{
 /**
  * hitting this directly from express is just a spewed out JSON string of the info we will pass into react
  */
+/*
 app.use('/api/nft', (req, res, next)=>{
     res.end(JSON.stringify(loopLinks()))
-})
-app.use('/hey_honey', async (req, res, next) => {
+})*/
+app.use('/api/nft', async (req, res, next) => {
     let { e } = req.body
     let resArray = Object.values(e)
     let targetString = ""
