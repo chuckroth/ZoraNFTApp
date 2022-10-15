@@ -1,10 +1,11 @@
 import './App.css';
-import Gallery from './Gallery';
+import Form from './Form'
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Gallery />
+        <h1>Zora Query Application</h1>
+        <Form/>
       </header>
     </div>
   );

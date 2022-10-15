@@ -59,8 +59,8 @@ app.use('/api/nft', (req, res, next)=>{
     res.end(JSON.stringify(loopLinks()))
 })
 app.use('/hey_honey', async (req, res, next) => {
-    let { name } = req.body
-    let resArray = Object.values(name)
+    let { e } = req.body
+    let resArray = Object.values(e)
     let targetString = ""
     let x
     for(x = 0; x< resArray.length; x++){
@@ -70,7 +70,7 @@ app.use('/hey_honey', async (req, res, next) => {
     let submittedForm = JSON.stringify(broken, null, 3)
     //console.log(submittedForm)
     console.log(resArray)
-    console.log({ name })
+    console.log({ e })
     const allTokens = JSON.parse(submittedForm).tokens.nodes
     let theTokens = () =>{
         let theCollection = Object.keys(allTokens).length

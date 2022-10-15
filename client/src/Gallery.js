@@ -1,4 +1,4 @@
-import React, {Component, useState, setState} from "react";
+import React, {Component} from "react";
 import axios from 'axios'
 
 export default class Gallery extends Component{
@@ -9,7 +9,7 @@ export default class Gallery extends Component{
         }
     }
 
-    componentDidMount = () =>{
+    handleClick = () =>{
         axios.get('/api/nft').then(response=>{
             //console.log(response.data)
             let responseArray = response.data
@@ -24,7 +24,7 @@ export default class Gallery extends Component{
             for(x=0; x<responseArray.length; x++){
                 let anImageSrc = JSON.stringify(response.data[x].url)
                 const newImage = new makeImage(anImageSrc.slice(3,-3))
-                imageArray.push(<img src={newImage.aUrl} alt="Internal Server Error" />)
+                imageArray.push(<img src={newImage.aUrl} alt="Internal Server Error" loading="lazy"/>)
                 
             }
             this.setState({
@@ -37,43 +37,65 @@ export default class Gallery extends Component{
     render(){
         return(
             <div>
-                <Worm />
+                <Form />
+                <button onClick={handleClick}></button>
                 <div>{this.state.ImageUrl}</div>
             </div>
         )
     }
 }
 
-function Worm (){
-    const [ name, getNFT ] = useState("")
-    let postName = (e) =>{
-        let output
-        async function getInfo(e) {
-        e.preventDefault()
-        try {
-            const resp = await axios.post("/hey_honey", {
-                name
-            })
+class Form extends Component{
+    constructor(props){
+        super(props);
 
+        this.state={
+            text: '',
+            value: 'hello',
+        }
+
+        this.handleChange=this.handleChange.bind(this)
+        this.apply=this.apply.bind(this)
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    apply(){
+        
+        
+        this.setState(({ value }) => ({ text: postName(value) }));
+      console.log(`this is the state right now${this.state.text}`)
+    }
+
+    render(){
+        return (
+            <div>
+                <input type="text" onChange={this.handleChange} />
+                <button onClick={ this.apply}>ok</button>
+                <p>{this.state.text}</p>
+            </div>
+        );
+    }
+}
+
+
+function postName(e){
+    let output
+    async function getInfo(e) {
+        try {
+            const resp = await axios.post("/hey_honey",{ e })
             console.log(resp.data)
             output = resp.data
+            
             return output
         } catch (error) {
             console.error(error)
         }
-        }
-        getInfo(e).then(output =>{console.log("output it outside of function scope", output)
-        this.setState({ name : output})
-        })
-        
     }
-    return (
-        <div className="App">
-            <form onSubmit={postName}>
-                <input type="text" value={name} onChange={(e) => getNFT(e.target.value)} />
-                <button type="submit">Get Collection's Gallery</button>
-                <p>{name}</p>
-            </form>
-        </div>
-    )
+
+getInfo(e).then(output =>{console.log("output is outside of function scope", output)
+})
+return output
 }
