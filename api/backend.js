@@ -42,7 +42,7 @@ let loopLinks = () =>
 {
   let output =[]
     for(x =0;x<theTokens(); x++) {
-    let newToken = new tokenInfo(x, JSON.stringify(everyToken[x].token.image.mediaEncoding.thumbnail))
+    let newToken = new tokenInfo(x, JSON.stringify(everyToken[x].token))
     output.push(newToken)
     }
     return output
@@ -55,10 +55,10 @@ app.get('/', (req, res)=>{
 /**
  * hitting this directly from express is just a spewed out JSON string of the info we will pass into react
  */
-/*
-app.use('/api/nft', (req, res, next)=>{
+
+app.use('/jerry', (req, res, next)=>{
     res.end(JSON.stringify(loopLinks()))
-})*/
+})
 app.use('/api/nft', async (req, res, next) => {
     let { e } = req.body
     let resArray = Object.values(e)

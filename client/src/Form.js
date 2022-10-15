@@ -12,7 +12,7 @@ export default function Form() {
             let imageArray = []
             const resp = await postName(name)
             if (resp === "Internal Server Error"){
-                imageArray = "Internal Server Error"
+                imageArray = "Internal Server Error: Bad Request"
             } else {
             let x
             for(x=0; x<resp.length; x++){
