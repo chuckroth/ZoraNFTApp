@@ -7,6 +7,7 @@ const zdk = new ZDK("https://api.zora.co/graphql");
 app.use(express.json())
 
 
+//using the ZDK to make query
 async function fetchTokens(zdk, ownerAddresses){
     return await zdk.tokens({where: {ownerAddresses}})
 } 
@@ -15,6 +16,11 @@ function myTokenData(name, owner,url){
     this.name = name
     this.url = url
 }
+
+/**
+ * submit form is set to onChange so the input is passed as an array of each character
+ * This takes the array of characters passed in and makes it viable to be sent into the function
+ */
 function formatInput(a){
     let resArr= Object.values(a)
     let targetStr = ""
@@ -25,6 +31,7 @@ function formatInput(a){
     console.log(targetStr)
     return targetStr
 }
+
 
 function formatJSON(theJSON){
     let x

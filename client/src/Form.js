@@ -13,6 +13,7 @@ export default function Form() {
           let imageArray = []
           const resp = await postName(name)
           if (resp === "Internal Server Error"){
+            //invalid query displays text instead of images
               imageArray = "Bad Query"
           } else {
           let x
@@ -57,6 +58,7 @@ async function postName (e) {
       const resp = await axios.post('/api/nft',{ e })
       console.log(resp.data)
       
+      //this is what I set the return value to in express route's try catch
       if (resp.data === "this is bad"){
           return "Internal Server Error"
       }
