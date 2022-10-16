@@ -20,32 +20,37 @@ async function fetchTokens(zdk, collectionAddresses){
 /**
  * I am using modules to utilize top level await
 */
-const tokens = await fetchTokens(zdk, '0x42069ABFE407C60cf4ae4112bEDEaD391dBa1cdB')
-/**
- * This function allows me to get the size of the 'node' array in the JSON 
- * so we get the exact amount of NFT urls corresponding to the collectionAddress
-*/
-let nftGallery = JSON.stringify(tokens,null,3)
-const everyToken = JSON.parse(nftGallery).tokens.nodes
-let theTokens = () =>{
-    let theCollection = Object.keys(everyToken).length
-    return theCollection
-}
-
-function tokenInfo(num, url){
-    this.num = num
+function myTokenData(name, description, owner,url){
+    this.name = name
+    this.description = description
+    this.owner = owner
     this.url = url
 }
-
-let x;
-let loopLinks = () =>
-{
-  let output =[]
-    for(x =0;x<theTokens(); x++) {
-    let newToken = new tokenInfo(x, JSON.stringify(everyToken[x].token))
-    output.push(newToken)
+/**
+ * 
+*/
+function formatJSON(theJSON){
+    let x
+    let outPut = []
+    for(x=0; x< theJSON.length; x++){
+        let thisTokenData = new myTokenData(theJSON[x].token.name, 
+            theJSON[x].token.description, 
+            theJSON[x].token.owner, 
+            theJSON[x].token.image.mediaEncoding.thumbnail)
+            outPut.push(thisTokenData)
     }
-    return output
+    let astr= JSON.stringify(outPut)
+    return astr
+}
+
+function formatInput(a){
+    let resArr= Object.values(a)
+    let targetStr = ""
+    let x
+    for(x = 0; x< resArr.length; x++){
+        targetStr = targetStr + resArr[x]
+    }
+    return targetStr
 }
 
 
@@ -56,45 +61,23 @@ app.get('/', (req, res)=>{
  * hitting this directly from express is just a spewed out JSON string of the info we will pass into react
  */
 
-app.use('/jerry', (req, res, next)=>{
-    res.end(JSON.stringify(loopLinks()))
-})
+
 app.use('/api/nft', async (req, res, next) => {
-    let { e } = req.body
-    let resArray = Object.values(e)
-    let targetString = ""
-    let x
-    for(x = 0; x< resArray.length; x++){
-        targetString = targetString + resArray[x]
-    }
-    let broken = await fetchTokens(zdk, targetString)
-    let submittedForm = JSON.stringify(broken, null, 3)
-    //console.log(submittedForm)
-    console.log(resArray)
-    console.log({ e })
-    const allTokens = JSON.parse(submittedForm).tokens.nodes
-    let theTokens = () =>{
-        let theCollection = Object.keys(allTokens).length
-        return theCollection
-    }
-
-    function tokenInf(num, url){
-        this.num = num
-        this.url = url
-    }
-
-    let y;
-    let allUrls = () =>
-    {
-    let output =[]
-        for(y =0;y<theTokens(); y++) {
-        let newToken = new tokenInfo(y, JSON.stringify(allTokens[y].token.image.mediaEncoding.thumbnail))
-        output.push(newToken)
+    try {
+        let { e } = req.body
+        const inp = { e }
+        const out = formatInput(inp)
+        const qry = await fetchTokens(zdk, out)
+        const qryString = JSON.stringify(qry, null, 3)
+        const theNodes = JSON.parse(qryString).tokens.nodes
+        const ourSend = formatJSON(theNodes) 
+        console.log(ourSend)
+        res.end(ourSend)
+        } catch (error) {
+        console.error("invalid query")
+        res.send("this is bad")
         }
-        return output
-    }
-    console.log(JSON.stringify(allUrls()))
-    res.end(JSON.stringify(allUrls()))
+
 
 })
 
