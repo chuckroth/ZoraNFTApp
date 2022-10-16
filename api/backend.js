@@ -1,16 +1,25 @@
 import {ZDK} from "@zoralabs/zdk"
 import express from "express"
-
+/**
+ * I cant make comments in the package.json on the client folder...
+ * i'm using a proxy server 
+ * instead of importing cors because this is a single page app
+ */
 const port = 5150
 const app = express()
+//using the ZDK to make query
 const zdk = new ZDK("https://api.zora.co/graphql");
 app.use(express.json())
 
 
-//using the ZDK to make query
+
+//no longer relevant but i was using modules instead of commonjs so i could use top level await with this
 async function fetchTokens(zdk, ownerAddresses){
     return await zdk.tokens({where: {ownerAddresses}})
 } 
+
+
+
 
 function myTokenData(name, owner,url){
     this.name = name

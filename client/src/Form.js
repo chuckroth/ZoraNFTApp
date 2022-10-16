@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from 'axios'
 import Card from 'react-bootstrap/Card';
 
+//probably would have been better suited as a class but useState felt more elegant
 export default function Form() {
   const [name, getNFT] = useState("");
   const [pics, setPics] = useState([]);
@@ -24,6 +25,9 @@ export default function Form() {
               } else{
                   const nftName = resp[x].name
                   const nftImage = resp[x].url
+                  /**
+                   * This is definitely not best practices but i was pleasantly surprised that this was still responsive in react
+                   */
                   imageArray.push
                   (<Card style={{ width: '30rem', display: 'grid'}}>
                       <Card.Img variant="top" src={nftImage} alt= "Internal Server Error"style={{ width: '20rem' }} />
