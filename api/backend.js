@@ -54,6 +54,10 @@ function formatJSON(theJSON){
     let astr= JSON.stringify(outPut)
     return astr
 }
+
+app.get('/', (req, res)=>{
+    res.end("the app is running")
+})
 app.use('/api/nft', async (req, res, next)=>{
     try {
         let { e } = req.body
