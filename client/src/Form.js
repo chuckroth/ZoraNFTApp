@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 
 //probably would have been better suited as a class but useState felt more elegant
 export default function Form() {
-  const [name, getNFT] = useState("");
+  const [name, getNFT] = useState(""); 
   const [pics, setPics] = useState([]);
 
   return (
@@ -12,7 +12,7 @@ export default function Form() {
       <form onSubmit={async (e)=>{
           e.preventDefault()
           let imageArray = []
-          const resp = await postName(name)
+          const resp = await getGal(name)
           if (resp === "Internal Server Error"){
             //invalid query displays text instead of images
               imageArray = "Bad Query"
@@ -30,7 +30,7 @@ export default function Form() {
                    */
                   imageArray.push
                   (<Card style={{ width: '30rem', display: 'grid'}}>
-                      <Card.Img variant="top" src={nftImage} alt= "Internal Server Error"style={{ width: '20rem' }} />
+                      <Card.Img variant="top" src={nftImage} alt= "image not found" style={{ width: '20rem' }} />
                       <Card.Body style={{backgroundColor:'blue'}}>
                       <Card.Title>Piece Name: {nftName}</Card.Title>
                       <Card.Text>
@@ -57,7 +57,7 @@ export default function Form() {
   );
 }
 
-async function postName (e) {
+async function getGal (e) {
     try {
       const resp = await axios.post('/api/nft',{ e })
       console.log(resp.data)
