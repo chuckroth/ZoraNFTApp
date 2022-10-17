@@ -31,7 +31,7 @@ export default function Form() {
                   imageArray.push
                   (<Card style={{ width: '30rem', display: 'grid'}}>
                       <Card.Img variant="top" src={nftImage} alt= "Internal Server Error"style={{ width: '20rem' }} />
-                      <Card.Body>
+                      <Card.Body style={{backgroundColor:'blue'}}>
                       <Card.Title>Piece Name: {nftName}</Card.Title>
                       <Card.Text>
                       </Card.Text>
