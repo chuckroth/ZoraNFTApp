@@ -65,10 +65,10 @@ export default function Form() {
                    */
                   imageArray.push
                   (<Card style={{ width: '30rem', display: 'grid'}}>
-                      <Card.Img variant="top" src={nftImage} alt= "image not found" style={{ width: '20rem' }} />
-                      <Card.Body>
-                      <Card.Title>Piece Name: {nftName}</Card.Title>
-                      <Card.Text>
+                      <Card.Img variant="top" src={nftImage} alt= "505 err :/" style={{ width: '30rem', backgroundColor: 'magenta', color: 'white'}} />
+                      <Card.Body style={{color: 'magenta'}}>
+                      <Card.Title></Card.Title>
+                      <Card.Text>Piece Name: {nftName}
                       </Card.Text>
                       </Card.Body>
                       </Card>)
